@@ -3,6 +3,7 @@ package com.makotovh.cucumerpresentation.controller;
 import com.makotovh.cucumerpresentation.entity.Section;
 import com.makotovh.cucumerpresentation.model.SectionRequest;
 import com.makotovh.cucumerpresentation.service.SectionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class SectionController {
 
   @PostMapping
   @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
-  public Mono<Section> saveSection(@RequestBody SectionRequest sectionRequest) {
+  public Mono<Section> saveSection(@RequestBody @Valid SectionRequest sectionRequest) {
     return sectionService.saveSection(sectionRequest);
   }
 }

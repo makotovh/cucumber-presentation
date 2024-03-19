@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
+import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 
 @Component
 @RequiredArgsConstructor
@@ -14,9 +15,10 @@ public class ResponseHandler {
 
   private final ObjectMapper objectMapper;
 
-  public EntityExchangeResult<?> lastResponse;
+  public ResponseSpec response;
 
   public JsonNode getResponseAsJson() {
+    var lastResponse = response.expectBody(String.class).returnResult();
     try {
       return objectMapper.readTree(lastResponse.getResponseBodyContent());
     } catch (Exception e) {

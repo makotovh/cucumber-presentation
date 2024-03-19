@@ -17,18 +17,8 @@ public class SectionSteps extends BaseIntegrationTest {
 
     var unit = unitService.getUnitByName(unitName).block();
     var request =
-        SectionRequest.builder()
-            .name(name)
-            .description(description)
-            .unitId(unit.getId())
-            .build();
-    this.responseHandler.lastResponse =
-        webTestClient
-            .post()
-            .uri("/sections")
-            .bodyValue(request)
-            .exchange()
-            .expectBody(String.class)
-            .returnResult();
+        SectionRequest.builder().name(name).description(description).unitId(unit.getId()).build();
+    this.responseHandler.response =
+        webTestClient.post().uri("/sections").bodyValue(request).exchange();
   }
 }

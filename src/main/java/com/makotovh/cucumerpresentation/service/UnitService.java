@@ -30,4 +30,8 @@ public class UnitService {
   public Mono<Unit> getUnitByName(String name) {
     return Mono.fromSupplier(() -> unitRepository.findByName(name)).flatMap(Mono::justOrEmpty);
   }
+
+  public Mono<Unit> getUnitById(Long unitId) {
+    return Mono.fromSupplier(() -> unitRepository.findById(unitId)).flatMap(Mono::justOrEmpty);
+  }
 }
