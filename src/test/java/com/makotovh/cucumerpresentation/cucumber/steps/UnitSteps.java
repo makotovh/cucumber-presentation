@@ -1,13 +1,18 @@
 package com.makotovh.cucumerpresentation.cucumber.steps;
 
 import com.makotovh.cucumerpresentation.cucumber.BaseIntegrationTest;
+import com.makotovh.cucumerpresentation.entity.Unit;
 import com.makotovh.cucumerpresentation.model.UnitRequest;
+import com.makotovh.cucumerpresentation.repository.UnitRepository;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UnitSteps extends BaseIntegrationTest {
 
-  @When("Add a new unit with name {string} and description {string}")
+  @Autowired private UnitRepository unitRepository;
+
+  @When("New unit with name {string} and description {string}")
   public void add_a_new_unit_with_name_and_description(String name, String description) {
     // Write code here that turns the phrase above into concrete actions
     var unitRequest = UnitRequest.builder().name(name).description(description).build();
@@ -15,9 +20,10 @@ public class UnitSteps extends BaseIntegrationTest {
         webTestClient.post().uri("/units").bodyValue(unitRequest).exchange();
   }
 
-  @When("I get the unit with id {long}")
-  public void i_get_the_unit_with_id(Long id) {
-    this.responseHandler.response = webTestClient.get().uri("/units/" + id).exchange();
+  @When("I get the unit with name {string} by id")
+  public void i_get_the_unit_with_name(String name) {
+    var unitId = unitRepository.findByName(name).map(Unit::getId).orElse(-999L);
+    this.responseHandler.response = webTestClient.get().uri("/units/" + unitId).exchange();
   }
 
   @Then("I should get a unit with name {string} and description {string}")
