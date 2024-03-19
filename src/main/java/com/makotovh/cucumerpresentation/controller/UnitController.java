@@ -3,6 +3,7 @@ package com.makotovh.cucumerpresentation.controller;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.makotovh.cucumerpresentation.entity.Unit;
+import com.makotovh.cucumerpresentation.exception.NotFoundException;
 import com.makotovh.cucumerpresentation.model.UnitRequest;
 import com.makotovh.cucumerpresentation.service.UnitService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,8 @@ public class UnitController {
 
   @GetMapping("/{unitId}")
   public Mono<Unit> getUnitById(@PathVariable Long unitId) {
-    return unitService.getUnitById(unitId);
+    return unitService
+        .getUnitById(unitId)
+        .switchIfEmpty(Mono.error(new NotFoundException("Unit not found")));
   }
 }
