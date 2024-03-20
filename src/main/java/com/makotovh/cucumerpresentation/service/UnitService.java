@@ -23,10 +23,6 @@ public class UnitService {
                     .build()));
   }
 
-  public Mono<Unit> getUnit(Long id) {
-    return Mono.fromSupplier(() -> unitRepository.findById(id)).flatMap(Mono::justOrEmpty);
-  }
-
   public Mono<Unit> getUnitByName(String name) {
     return Mono.fromSupplier(() -> unitRepository.findByName(name)).flatMap(Mono::justOrEmpty);
   }
