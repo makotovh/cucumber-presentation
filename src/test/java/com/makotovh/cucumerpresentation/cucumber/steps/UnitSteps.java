@@ -14,7 +14,6 @@ public class UnitSteps extends BaseIntegrationTest {
 
   @When("New unit with name {string} and description {string}")
   public void add_a_new_unit_with_name_and_description(String name, String description) {
-    // Write code here that turns the phrase above into concrete actions
     var unitRequest = UnitRequest.builder().name(name).description(description).build();
     this.responseHandler.response =
         webTestClient.post().uri("/units").bodyValue(unitRequest).exchange();
@@ -28,7 +27,6 @@ public class UnitSteps extends BaseIntegrationTest {
 
   @Then("I should get a unit with name {string} and description {string}")
   public void i_should_get_a_unit_with_name_and_description(String name, String description) {
-    // Write code here that turns the phrase above into concrete actions
     this.responseHandler
         .response
         .expectBody()
