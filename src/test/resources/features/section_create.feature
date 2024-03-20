@@ -10,3 +10,7 @@ Feature: Create Section feature
   Scenario: Should validate section name
     When Add a new section with name "" and description "This is a section" in the unit "Unit 1"
     Then I receive status code of 400
+
+  Scenario: Should validate unit id
+    When Add a new section with name "Section 1" and description "This is a section" in the unit "Non-existent"
+    Then I receive status code of 400
